@@ -1,7 +1,6 @@
 import { useAuth } from "../context/AuthContext";
 import Header from "../components/Header";
 import Dashboard from "../components/Dashboard";
-// import FacultyDashboard from "../components/FacultyDashboard";
 import Login from "../pages/Login";
 import { Outlet } from "react-router-dom";
 

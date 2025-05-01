@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Instance from "../AxiosConfig";
-import { facultyrequestInventory } from "../../../back/controllers/inventoryController";
 
 const RequestInventory = () => {
 

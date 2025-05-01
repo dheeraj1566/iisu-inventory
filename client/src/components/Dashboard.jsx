@@ -12,7 +12,7 @@ function Dashboard() {
   const fetchData = async () => {
     try {
       const res = await Instance.get("/auth/checkToken");
-      setRole(res.data.role); // Should be "admin", "storeman", or "faculty"
+      setRole(res.data.role); 
       console.log(res.data.role);
     } catch (error) {
       console.error("Error fetching user role:", error);
