@@ -240,4 +240,4 @@ const RequestInventory = () => {
   );
 };
 
-export default facultyrequestInventory;
+export default RequestInventory;
