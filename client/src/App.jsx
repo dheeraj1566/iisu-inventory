@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext"; 
+import { AuthProvider } from "./context/AuthContext";
 import AddNewInventory from "./pages/AddNewInventory.jsx";
 import AddInventory from "./pages/AddInventory.jsx";
 import AdminRequestTable from "./pages/AdminRequestTable.jsx";
@@ -8,17 +8,13 @@ import InventoryTable from "./pages/InventoryTable";
 import ChangeInventory from "./pages/ChangeInventory";
 import IssueInventory from "./pages/IssueInventory";
 import IssueInventoryTable from "./pages/IssueInventoryTable.jsx";
-// import ReturnInventory from "./pages/FacultyReturnInventory.jsx";
 import FacultyRequestInventory from "./pages/FacultyRequestInventory.jsx";
 import RequestInventoryTable from "./pages/RequestInventoryTable.jsx";
-// import FacultyReturnInventory from "./pages/FacultyReturnInventory.jsx";
 import Report from "./pages/Report";
 import Summary from "./pages/Summary";
 import ThreShold from "./pages/Threshold";
 import Login from "./pages/Login";
 import First from "./pages/First";
-import FacultyLogin from "./pages/FacultyLogin.jsx";
-import FacultySignUp from "./pages/FacultySignUp.jsx";
 import ProtectedRoute from "./components/ProtectedRouter";
 import SignUp from "./pages/SignUp.jsx";
 import Notify from "./pages/Notify.jsx";
@@ -36,40 +32,18 @@ const router = createBrowserRouter([
     children: [
       { path: "/login", element: <Login /> },
       { path: "/signUp", element: <SignUp /> },
-
-
-      // {
-      //   path: "/facultylogin",
-      //   element: (
-      //     <ProtectedRoute>
-      //       <FacultyLogin/>
-      //     </ProtectedRoute>
-      //   ),
-      // },
-
-
-      // {
-      //   path: "/facultysignUp",
-      //   element: (
-      //     <ProtectedRoute>
-      //       <FacultySignUp/>
-      //     </ProtectedRoute>
-      //   ),
-      // },
-    {
+      {
         path: "/add-new-inventory",
         element: (
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={["admin", "storeman"]}>
             <AddNewInventory />
           </ProtectedRoute>
         ),
       },
-
-
       {
         path: "/add-inventory",
         element: (
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={["admin", "storeman"]}>
             <AddInventory />
           </ProtectedRoute>
         ),
@@ -78,7 +52,7 @@ const router = createBrowserRouter([
       {
         path: "/restock-inventory",
         element: (
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={["admin", "storeman"]}>
             <RestockInventory />
           </ProtectedRoute>
         ),
@@ -164,7 +138,7 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <FacultyIssueInventoryTable />
-        </ProtectedRoute>
+          </ProtectedRoute>
         ),
       },
 
@@ -173,7 +147,7 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <FacultyViewRequestTable />
-        </ProtectedRoute>
+          </ProtectedRoute>
         ),
       },
 
@@ -182,43 +156,33 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <FacultyRequestInventory />
-        </ProtectedRoute>
+          </ProtectedRoute>
         ),
       },
       {
         path: "/faculty-notification",
         element: (
           <ProtectedRoute>
-            <FacultyNotification/>
-        </ProtectedRoute>
+            <FacultyNotification />
+          </ProtectedRoute>
         ),
       },
-
-      // {
-      //   path: "/faculty-return-inventory",
-      //   element: (
-      //     <ProtectedRoute>
-      //     <FacultyReturnInventory />
-      //   </ProtectedRoute>
-      //   ),
-      // },
-
       {
-          path: "/notify",
-          element: (
-            <ProtectedRoute>
-              <Notify />
-            </ProtectedRoute>
-          ),
-         },
-         {
-          path: "/faculty-request-inventory-table",
-          element: (
-            <ProtectedRoute>
-              <FacultyRequestInventoryTable />
-            </ProtectedRoute>
-          ),
-         },
+        path: "/notify",
+        element: (
+          <ProtectedRoute>
+            <Notify />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/faculty-request-inventory-table",
+        element: (
+          <ProtectedRoute>
+            <FacultyRequestInventoryTable />
+          </ProtectedRoute>
+        ),
+      },
 
       {
         path: "/report",
@@ -244,7 +208,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-    
+
     ],
   },
 ]);
