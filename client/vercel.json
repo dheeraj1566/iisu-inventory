@@ -3,6 +3,10 @@
       {
         "source": "/old-route",
         "destination": "/new-route"
+      },
+      {
+        "source": "/(.*)",
+        "destination": "/index.html"
       }
     ]
   }
