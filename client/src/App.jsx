@@ -108,14 +108,6 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-      // {
-      //   path: "/return-inventory",
-      //   element: (
-      //     <ProtectedRoute>
-      //       <ReturnInventory />
-      //     </ProtectedRoute>
-      //   ),
-      // },
       {
         path: "/purchase-table",
         element: (

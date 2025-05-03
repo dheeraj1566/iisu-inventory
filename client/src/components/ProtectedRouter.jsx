@@ -18,6 +18,7 @@ function ProtectedRoute({ children, allowedRoles }) {
       if (response.status === 200) {
         setIsAuthenticated(true);
         setRole(response.data.role); 
+        console.log(response.data.role)
       } else {
         setIsAuthenticated(false);
       }
