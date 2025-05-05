@@ -18,12 +18,11 @@ function ProtectedRoute({ children, allowedRoles }) {
       if (response.status === 200) {
         setIsAuthenticated(true);
         setRole(response.data.role); 
-        console.log(response.data.role)
       } else {
         setIsAuthenticated(false);
       }
     } catch (error) {
-      console.log(error);
+      console.error("Token check failed:", error);
       setIsAuthenticated(false);
     } finally {
       setLoading(false);
@@ -37,7 +36,7 @@ function ProtectedRoute({ children, allowedRoles }) {
   }
 
   if (allowedRoles && !allowedRoles.includes(role)) {
-    return <Navigate to="/" replace />; 
+    return <Navigate to="/" replace />;
   }
 
   return children;

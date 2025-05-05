@@ -6,91 +6,76 @@ function Dashboard() {
   const [role, setRole] = useState("");
 
   useEffect(() => {
-    fetchData();
+    fetchUserRole();
   }, []);
 
-  const fetchData = async () => {
+  const fetchUserRole = async () => {
     try {
       const res = await Instance.get("/auth/checkToken");
-      setRole(res.data.role); 
-      console.log(res.data.role);
+      setRole(res.data.role);
+      console.log("User Role:", res.data.role);
     } catch (error) {
       console.error("Error fetching user role:", error);
     }
   };
 
-  // Capitalize role for heading
   const getRoleHeading = () => {
     if (!role) return "Dashboard";
     return `${role.charAt(0).toUpperCase() + role.slice(1)} Dashboard`;
   };
 
   return (
-    <div className="left_side bg-blue-950 text-amber-50 fixed z-1 w-1/6 h-full">
+    <div className="left_side bg-blue-950 text-amber-50 fixed z-1 w-1/6 h-full overflow-y-auto">
       <div className="dashboard">
-        <h1 className="bg-blue-900 text-center font-bold text-3xl px-6 py-5">
+        <h1 className="bg-blue-900 text-center font-bold text-2xl px-6 py-4">
           {getRoleHeading()}
         </h1>
 
-        <ul>
-          {/* Common Link: All roles can view inventory table */}
-          <Link to="/inventory-table">
-            <li className="py-3 text-lg hover:font-bold text-blue-50 px-5 border-black border-b-1 hover:bg-gray-50 hover:text-blue-900">
-              Inventory Table
-            </li>
-          </Link>
+        <ul className="text-sm">
+          {/* Common for all */}
+          <Link to="/inventory-table"><li className="nav-item">Inventory Table</li></Link>
+          <Link to="/summary"><li className="nav-item">Summary</li></Link>
 
-          {/* Storeman/Admin Access */}
-          {(role === "storeman" || role === "admin") && (
+          {/* Admin + Storeman */}
+          {(role === "admin" || role === "storeman") && (
             <>
-              <Link to="/add-inventory">
-                <li className="py-3 text-lg hover:font-bold hover:bg-gray-50 hover:text-blue-900 text-blue-50 px-5 border-black border-b-1">
-                  Add Inventory
-                </li>
-              </Link>
-
-              <Link to="/issue-inventory">
-                <li className="py-3 text-lg hover:font-bold text-blue-50 px-5 hover:bg-gray-50 hover:text-blue-900 border-black border-b-1">
-                  Issued Inventory
-                </li>
-              </Link>
-
-              <Link to="/issue-inventory-table">
-                <li className="py-3 text-lg hover:font-bold text-blue-50 px-5 hover:bg-gray-50 hover:text-blue-900 border-black border-b-1">
-                  Issued Inventory Table
-                </li>
-              </Link>
+              <Link to="/add-new-inventory"><li className="nav-item">Add New Inventory</li></Link>
+              <Link to="/add-inventory"><li className="nav-item">Add Inventory</li></Link>
+              <Link to="/restock-inventory"><li className="nav-item">Restock Inventory</li></Link>
+              <Link to="/issue-inventory"><li className="nav-item">Issue Inventory</li></Link>
+              <Link to="/issue-inventory-table"><li className="nav-item">Issued Inventory Table</li></Link>
+              <Link to="/request-inventory-table"><li className="nav-item">Request Inventory Table</li></Link>
+              <Link to="/admin-request-table"><li className="nav-item">Admin Request Table</li></Link>
+              <Link to="/change-inventory"><li className="nav-item">Change Inventory</li></Link>
+              <Link to="/faculty-issue-inventory-table"><li className="nav-item">Faculty Issue Table</li></Link>
+              <Link to="/faculty-view-request-table"><li className="nav-item">Faculty View Request</li></Link>
+              <Link to="/faculty-notification"><li className="nav-item">Faculty Notifications</li></Link>
+              <Link to="/notify"><li className="nav-item">Send Notification</li></Link>
+              <Link to="/faculty-request-inventory-table"><li className="nav-item">Faculty Request Table</li></Link>
+              <Link to="/report"><li className="nav-item">Report</li></Link>
             </>
           )}
 
-          {/* Admin Only Access */}
+          {/* Admin Only */}
           {role === "admin" && (
-            <Link to="/threshold">
-              <li className="py-3 text-lg hover:font-bold hover:bg-gray-50 hover:text-blue-900 text-blue-50 px-5 border-black border-b-1">
-                Threshold
-              </li>
-            </Link>
+            <Link to="/threshold"><li className="nav-item">Threshold</li></Link>
           )}
 
-          {/* Faculty Only Access */}
+          {/* Faculty Only */}
           {role === "faculty" && (
             <>
-              <Link to="/faculty-request">
-                <li className="py-3 text-lg hover:font-bold text-blue-50 px-5 hover:bg-gray-50 hover:text-blue-900 border-black border-b-1">
-                  Faculty Request
-                </li>
-              </Link>
+              <Link to="/faculty-request-inventory"><li className="nav-item">Request Inventory</li></Link>
+              <Link to="/threshold"><li className="nav-item">Threshold</li></Link>
             </>
           )}
-        </ul>
 
-        {/* Common Summary Link for All Roles */}
-        <ul>
-          <Link to="/summary">
-            <li className="py-3 text-lg hover:font-bold hover:bg-gray-50 hover:text-blue-900 text-blue-50 px-5 border-black border-b-1">
-              Summary
-            </li>
-          </Link>
+          {/* Accountant Only */}
+          {role === "accountant" && (
+            <>
+              <Link to="/purchase"><li className="nav-item">Purchase Inventory</li></Link>
+              <Link to="/purchase-table"><li className="nav-item">Purchase Table</li></Link>
+            </>
+          )}
         </ul>
       </div>
     </div>
