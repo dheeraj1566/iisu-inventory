@@ -40,11 +40,8 @@ function Dashboard() {
         </h1>
 
         <ul className="text-sm space-y-1">
-          {/* Common for all */}
           <Link to="/inventory-table"><li className={getNavItemClass("/inventory-table")}>Inventory Table</li></Link>
           <Link to="/summary"><li className={getNavItemClass("/summary")}>Summary</li></Link>
-
-          {/* Admin + Storeman */}
           {(role === "admin" || role === "storeman") && (
             <>
               <Link to="/add-new-inventory"><li className={getNavItemClass("/add-new-inventory")}>Add New Inventory</li></Link>
@@ -54,7 +51,7 @@ function Dashboard() {
               <Link to="/issue-inventory-table"><li className={getNavItemClass("/issue-inventory-table")}>Issued Inventory Table</li></Link>
               <Link to="/request-inventory-table"><li className={getNavItemClass("/request-inventory-table")}>Request Inventory Table</li></Link>
               <Link to="/admin-request-table"><li className={getNavItemClass("/admin-request-table")}>Admin Request Table</li></Link>
-              <Link to="/change-inventory"><li className={getNavItemClass("/change-inventory")}>Change Inventory</li></Link>
+              {/* <Link to="/change-inventory"><li className={getNavItemClass("/change-inventory")}>Change Inventory</li></Link> */}
               <Link to="/faculty-issue-inventory-table"><li className={getNavItemClass("/faculty-issue-inventory-table")}>Faculty Issue Table</li></Link>
               <Link to="/faculty-view-request-table"><li className={getNavItemClass("/faculty-view-request-table")}>Faculty View Request</li></Link>
               <Link to="/faculty-notification"><li className={getNavItemClass("/faculty-notification")}>Faculty Notifications</li></Link>
