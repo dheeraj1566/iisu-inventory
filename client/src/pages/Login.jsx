@@ -27,16 +27,16 @@ function Login() {
 
         switch (role) {
           case "admin":
-            navigate("/admin/dashboard");
+            navigate("/inventory-table");
             break;
           case "faculty":
-            navigate("/faculty/dashboard");
+            navigate("/inventory-table");
             break;
           case "storeman":
-            navigate("/storeman/dashboard");
+            navigate("/inventory-table");
             break;
           case "accountant":
-            navigate("/accountant/dashboard");
+            navigate("/inventory-table");
             break;
           default:
             navigate("/login");
