@@ -46,7 +46,7 @@ function Dashboard() {
             <>
               <Link to="/add-new-inventory"><li className={getNavItemClass("/add-new-inventory")}>Add New Inventory</li></Link>
               <Link to="/add-inventory"><li className={getNavItemClass("/add-inventory")}>Add Inventory</li></Link>
-              <Link to="/restock-inventory"><li className={getNavItemClass("/restock-inventory")}>Restock Inventory</li></Link>
+              {/* <Link to="/restock-inventory"><li className={getNavItemClass("/restock-inventory")}>Restock Inventory</li></Link> */}
               <Link to="/issue-inventory"><li className={getNavItemClass("/issue-inventory")}>Issue Inventory</li></Link>
               <Link to="/issue-inventory-table"><li className={getNavItemClass("/issue-inventory-table")}>Issued Inventory Table</li></Link>
               <Link to="/request-inventory-table"><li className={getNavItemClass("/request-inventory-table")}>Request Inventory Table</li></Link>
