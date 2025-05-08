@@ -8,7 +8,6 @@ import inventoryRoutes from "./routes/inventoryRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import facultyAuth from "./routes/facultyAuth.js";
 import accountantRoutes from "./routes/accountantRoutes.js";
-// import storemanRoutes from "./routes/storemanRoute.js";
 import storemanRoutes from "./routes/storemanRoute.js";
 import cloudinary from "cloudinary";
 
