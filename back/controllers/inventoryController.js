@@ -185,17 +185,16 @@ export const requestInventoryFaculty = async (req, res) => {
       requestByDept,
       requestQty,
       returnStatus,
-      requestByFaculty,
       requireDate,
       requestReason,
     } = req.body;
+    const requestByFaculty = req.user._id;
 
     if (
       !category ||
       !itemName ||
       !requestByDept ||
       !requestQty == undefined ||
-      !requestByFaculty ||
       !requireDate ||
       !requestReason ||
       !returnStatus
@@ -225,7 +224,7 @@ export const requestInventoryFaculty = async (req, res) => {
       requestQty,
       returnStatus,
       requestByFaculty,
-      requestDate: Date.now(), // Assuming you want to set the current date
+      requestDate: Date.now(), 
       requireDate,
       requireDate,
       requestReason,

@@ -30,8 +30,7 @@ function IssueInventoryTable() {
     const ampm = hours >= 12 ? 'PM' : 'AM';
     const hour12 = hours % 12 || 12;
   
-    // return `${day}-${month}-${year} ${hour12}:${minutes} ${ampm}`;
-    return `${day}-${month}-${year}`; // Only date in dd-mm-yyyy format
+    return `${day}-${month}-${year}`;
   };
 
   return (

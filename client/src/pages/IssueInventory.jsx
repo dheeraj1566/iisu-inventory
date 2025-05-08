@@ -22,23 +22,6 @@ function IssueInventory() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // const fetchCategories = async () => {
-    //   try {
-    //     const response = await Instance.get("/add/getTable");
-    //     if (response.data.length > 0) {
-    //       const uniqueCategories = [
-    //         ...new Set(response.data.map((cat) => cat.category)),
-    //       ];
-    //       setCategories(uniqueCategories);
-    //       setFormData((prevData) => ({
-    //         ...prevData,
-    //         category: uniqueCategories[0] || "",
-    //       }));
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching categories:", error);
-    //   }
-    // };
      const fetchIssuedInventory = async () => {
       try {
         const response = await Instance.get("/add/getViewRequestTable");
@@ -46,7 +29,6 @@ function IssueInventory() {
       } catch (error) {
         console.error("Error fetching issued inventory:", error);
       }
-    // fetchCategories();
     fetchIssuedInventory();
      
     }
@@ -137,20 +119,6 @@ function IssueInventory() {
 
               <div className="font-bold  text-blue-900">
                 <label htmlFor="category text-blue-900">Category</label>
-                {/* <select
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-                className="border-2 my-2 px-5 py-2 w-full  text-gray-500 rounded-md"
-                disabled
-              >
-                {/* <option value="">Select Category</option>
-                {categories.map((category, index) => (
-                  <option key={index} value={category}>
-                    {category}
-              //     </option>
-              //   ))} 
-              // </select> */}
                 <input
                   type="text"
                   name="category"
