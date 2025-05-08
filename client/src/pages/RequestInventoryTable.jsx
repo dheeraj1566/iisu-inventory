@@ -19,11 +19,6 @@ function RequestInventoryTable() {
         console.error("Error fetching request inventory:", error);
       }
     };
-
-
-
-
-
     fetchViewRequestInventory();
   }, []);
   console.log(viewRequestInventory);

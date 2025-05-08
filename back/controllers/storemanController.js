@@ -64,9 +64,14 @@ export const registerStoreman = async (req, res) => {
 //   }
 // };
 
-export const storemanLogOut = async (req, res) => {
-  res.clearCookie('token');
-  res.json({message:'User logged out'})
-  res.status(200).json({message:"user log out successfully"})
+export const storemanLogOut = (req, res) => {
+  try {
+    res.clearCookie('facultyToken');
+    res.json({ success: true, message: "Logged out" }); 
+
+    res.status(200).json({ message: "This will crash" }); 
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
 };
 

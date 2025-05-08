@@ -64,9 +64,14 @@ export const registerAccountant = async (req, res) => {
 //   }
 // };
 
-export const accountantLogOut = async (req, res) => {
-  res.clearCookie('token');
-  res.json({message:'Accountant logged out'})
-  res.status(200).json({message:"Accountant log out successfully"})
+export const accountantLogOut = (req, res) => {
+  try {
+    res.clearCookie('facultyToken');
+    res.json({ success: true, message: "Logged out" }); 
+
+    res.status(200).json({ message: "This will crash" }); 
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
 };
 

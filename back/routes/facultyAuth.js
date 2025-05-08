@@ -1,12 +1,12 @@
 import express from "express";
-import { registerFaculty,facultyLogOut} from "../controllers/facultyController.js";
+import {facultyLogOut, requestForInventroy} from "../controllers/facultyController.js";
 
 
 const router = express.Router();
 
-router.post("/facultysignUp", registerFaculty);
-// router.post("/facultylogin", loginFaculty);
-// router.get("/checkToken", checkAuth);
+// router.post("/facultysignUp", registerFaculty);
 router.post("/faculty-logout",facultyLogOut);
+router.post("/send-request", requestForInventroy);
+
 
 export default router;

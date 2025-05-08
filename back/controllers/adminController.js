@@ -64,9 +64,14 @@ export const registerAdmin = async (req, res) => {
 //   }
 // };
 
-export const adminLogOut = async (req, res) => {
-  res.clearCookie('token');
-  res.json({message:'Admin logged out'})
-  res.status(200).json({message:"Admin log out successfully"})
+export const adminLogOut = (req, res) => {
+  try {
+    res.clearCookie('facultyToken');
+    res.json({ success: true, message: "Logged out" }); 
+
+    res.status(200).json({ message: "This will crash" }); 
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
 };
 

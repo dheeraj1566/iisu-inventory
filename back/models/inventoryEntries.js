@@ -31,32 +31,31 @@ const requestItemSchema = new mongoose.Schema({
   requestReason: String,
   issuedQty: Number,
   issuedDate: { type: Date },
-
   returnDate: { type: Date },
   
 });
-const requestApprovedItemsSchema = new mongoose.Schema({
-  itemName: String, 
-  requestByDept: String,
-  requestQty: Number,
-  returnStatus : {
-    type: String,
-    enum: ["Returnable", "Non Returnable"],
-  },
-  requestByFaculty:String,
-  requestDate: { type: Date, default: Date.now },
-  requireDate: { type: Date },
-  status: {
-    type: String,
-    enum: [ "Approved"],
-  },
-  requestReason: String,
-  issuedQty: Number,
-  issuedDate: { type: Date },
+// const requestApprovedItemsSchema = new mongoose.Schema({
+//   itemName: String, 
+//   requestByDept: String,
+//   requestQty: Number,
+//   returnStatus : {
+//     type: String,
+//     enum: ["Returnable", "Non Returnable"],
+//   },
+//   requestByFaculty:String,
+//   requestDate: { type: Date, default: Date.now },
+//   requireDate: { type: Date },
+//   status: {
+//     type: String,
+//     enum: [ "Approved"],
+//   },
+//   requestReason: String,
+//   issuedQty: Number,
+//   issuedDate: { type: Date },
 
-  returnDate: { type: Date },
+//   returnDate: { type: Date },
   
-});
+// });
 
 
 
