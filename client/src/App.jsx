@@ -1,7 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
-
-
 import AddNewInventory from "./pages/AddNewInventory.jsx";
 import AddInventory from "./pages/AddInventory.jsx";
 import AdminRequestTable from "./pages/AdminRequestTable.jsx";
@@ -83,7 +81,7 @@ const router = createBrowserRouter([
       {
         path: "/request-inventory-table",
         element: (
-          <ProtectedRoute allowedRoles={["admin", "storeman"]}>
+          <ProtectedRoute allowedRoles={["admin", "storeman","faculty"]}>
             <RequestInventoryTable />
           </ProtectedRoute>
         ),
