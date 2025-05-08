@@ -1,10 +1,12 @@
 import express from "express";
-import {registerStoreman, storemanLogOut} from "../controllers/storManController.js"
+import { registerStoreman,storemanLogOut} from "../controllers/storemanController.js";
+
+
 const router = express.Router();
 
 router.post("/register-storeman", registerStoreman);
-router.post("/logout-storeman",storemanLogOut)
-
-
+// router.post("/facultylogin", loginFaculty);
+// router.get("/checkToken", checkAuth);
+router.post("/logout-storeman",storemanLogOut);
 
 export default router;

@@ -38,13 +38,14 @@ const Threshold = () => {
       ) : inventory.length === 0 ? (
         <p className="text-center text-red-600">No items with threshold below 5.</p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-300">
+        <div className="overflow-x-auto ml-5">
+          <table className="min-w-full p-4 border border-gray-300">
             <thead>
               <tr className="bg-blue-800 text-white text-center">
                 <th className="border px-4 py-2">Serial No</th>
                 <th className="border px-4 py-2">Category</th>
                 <th className="border px-4 py-2">Item Name</th>
+                <th className="border px-4 py-2">Qty</th>
                 <th className="border px-4 py-2">Threshold</th>
                 <th className="border px-4 py-2">Status</th>
                 <th className="border px-4 py-2">Actions</th>
@@ -59,6 +60,7 @@ const Threshold = () => {
                     </td>
                     <td className="border px-4 py-2 text-black">{categoryData.category}</td>
                     <td className="border px-4 py-2 text-black">{item.name}</td>
+                    <td className="border px-4 py-2 text-black">{item.qty}</td>
                     <td className="border px-4 py-2 text-black">{item.threshold}</td>
                     <td
                       className={`border text-black px-4 py-2 ${
@@ -71,7 +73,7 @@ const Threshold = () => {
                       <button
                         className="bg-green-700 text-white px-4 py-2 rounded-md"
                         onClick={() =>
-                          navigate("/change-inventory", {
+                          navigate("/restock-inventory", {
                             state: { category: categoryData.category, ...item },
                           })
                         }

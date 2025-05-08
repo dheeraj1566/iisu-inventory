@@ -8,10 +8,7 @@ function IssueInventoryTable() {
     const fetchIssuedInventory = async () => {
       try {
         const response = await Instance.get("/add/getIssuedInventory");
-        const filteredData = response.data.filter(
-          (category) => category.issuedItems && category.issuedItems.length > 0
-        );
-        setIssuedInventory(filteredData);
+        setIssuedInventory(response.data);
       } catch (error) {
         console.error("Error fetching issued inventory:", error);
       }
@@ -20,17 +17,21 @@ function IssueInventoryTable() {
     fetchIssuedInventory();
   }, []);
 
-  useEffect(() => {
-    
-    console.log("Updated issuedInventory:", issuedInventory);
-  }, [issuedInventory]);
 
   const formatDate = (isoDate) => {
     const date = new Date(isoDate);
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
+  
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
+  
+    const hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const hour12 = hours % 12 || 12;
+  
+    // return `${day}-${month}-${year} ${hour12}:${minutes} ${ampm}`;
+    return `${day}-${month}-${year}`; // Only date in dd-mm-yyyy format
   };
 
   return (
@@ -50,6 +51,7 @@ function IssueInventoryTable() {
               <th className="border text-white px-4 py-2">Faculty Name</th>
               <th className="border text-white px-4 py-2">Quantity</th>
               <th className="border text-white px-4 py-2">Issued Date</th>
+              {/* <th className="border text-white px-4 py-2">Return Date</th> */}
               <th className="border text-white px-4 py-2">Return Status</th>
             </tr>
           </thead>
@@ -57,10 +59,17 @@ function IssueInventoryTable() {
             {issuedInventory.length > 0 ? (
               issuedInventory.map((category, categoryIndex) => {
                 const letterCount = {};
+
                 return category.issuedItems.map((item, itemIndex) => {
                   const firstLetter = item.itemName.charAt(0).toUpperCase();
-                  letterCount[firstLetter] = (letterCount[firstLetter] || 0) + 1;
+                  if (!letterCount[firstLetter]) {
+                    letterCount[firstLetter] = 1;
+                  } else {
+                    letterCount[firstLetter]++;
+                  }
+
                   const serialNumber = `${categoryIndex + 1}.${firstLetter}.${letterCount[firstLetter]}`;
+
                   return (
                     <tr
                       key={`${categoryIndex}-${itemIndex}`}
@@ -85,8 +94,11 @@ function IssueInventoryTable() {
                         {item.issuedQty}
                       </td>
                       <td className="border border-blue-900 px-4 py-2">
-                        {formatDate(item.issuedDate)}
+                      {formatDate(item.issuedDate)}
                       </td>
+                      {/* <td className="border border-blue-900 px-4 py-2">
+                        {item.returnDate}
+                      </td> */}
                       <td className="border border-blue-900 px-4 py-2">
                         {item.returnStatus}
                       </td>
@@ -96,8 +108,8 @@ function IssueInventoryTable() {
               })
             ) : (
               <tr>
-                <td colSpan="8" className="text-center py-4">
-                  No issued inventory found.
+                <td colSpan="7" className="text-center py-4">
+                  No issued inventory
                 </td>
               </tr>
             )}

@@ -16,7 +16,7 @@ const ChangeInventory = () => {
   useEffect(() => {
     if (!category || !name) {
       toast.error("Invalid inventory item.");
-      // navigate("/inventory-table");
+      navigate("/inventory-table");
     }
   }, [category, name, navigate]);
 
@@ -32,10 +32,10 @@ const ChangeInventory = () => {
       });
 
       toast.success("Inventory updated successfully!");
-      // setInterval(() => {
-      //   window.location.reload();
-      //   navigate("/inventory-table");
-      // }, 8000);
+      setInterval(() => {
+        window.location.reload();
+        navigate("/inventory-table");
+      }, 8000);
      
     } catch (error) {
       console.error("Update Inventory error:", error.response?.data || error.message);

@@ -14,7 +14,6 @@ export const loginUser = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: "User not found" });
     }
-
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid password" });
@@ -32,7 +31,7 @@ export const loginUser = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      maxAge: 2 * 60 * 60 * 1000, 
+      maxAge: 2 * 60 * 60 * 1000,
     });
 
     res.status(200).json({
@@ -43,9 +42,9 @@ export const loginUser = async (req, res) => {
   }
 };
 
-
 export const checkAuth = (req, res) => {
-  const { adminToken, facultyToken, storeManToken} = req.cookies;
+  const { adminToken, facultyToken, storemanToken, accountantToken } =
+    req.cookies;
 
   let token = null;
   let role = null;
@@ -56,14 +55,15 @@ export const checkAuth = (req, res) => {
   } else if (facultyToken) {
     token = facultyToken;
     role = "faculty";
-  } else if (storeManToken) {
-    token = storeManToken;
-    role = "storeMan";
-  }
-  else {
+  } else if (storemanToken) {
+    token = storemanToken;
+    role = "storeman";
+  } else if (accountantToken) {
+    token = accountantToken;
+    role = "accountant";
+  } else {
     return res.status(401).json({ message: "No token found, please log in" });
   }
-
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     return res.status(200).json({

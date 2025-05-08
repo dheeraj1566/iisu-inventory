@@ -5,13 +5,14 @@ function PurchaseTable() {
   return (
     <div className="wrapper">
       <div className="main flex items-start justify-center"></div>
-      <div className="mt-10 text-black p-10">
+      <div className="mt-1 text-black p-10">
         <h2 className="text-3xl font-bold text-center text-blue-900">
           Purchase Details Table
         </h2>
-        <div className="flex justify-between items-center ">        
-            <p>Item Name : Pen</p>
-        <p>Category : Stationery</p>
+        <br></br>
+        <div className="flex justify-between items-center ">
+          <p className="font-bold">Item Name : Camera Lens </p>
+          <p className="font-bold">Category : Camera</p>
         </div>
 
         <table className="w-full border-collapse border border-blue-900 mt-4 text-black">
@@ -25,46 +26,52 @@ function PurchaseTable() {
               <th className="border text-white px-4 py-2">Bill Amount</th>
               <th className="border text-white px-4 py-2">Purchase Qty</th>
               <th className="border text-white px-4 py-2">Current Qty</th>
-              <th className="border text-white px-4 py-2">Price Per Unit (₹)</th>
+              <th className="border text-white px-4 py-2">
+                Price Per Unit (₹)
+              </th>
               <th className="border text-white px-4 py-2">Bill</th>
-
             </tr>
           </thead>
           <tbody>
             <tr className="text-center bg-blue-100 text-black">
+              <td className="border border-blue-900 px-4 py-2">1</td>
+              <td className="border border-blue-900 px-4 py-2">1.23</td>
               <td className="border border-blue-900 px-4 py-2">
-                1
+                Shyam Enterprise
               </td>
+              <td className="border border-blue-900 px-4 py-2">01-12-2023</td>
+              <td className="border border-blue-900 px-4 py-2">1000</td>
+              <td className="border border-blue-900 px-4 py-2">10</td>
+              <td className="border border-blue-900 px-4 py-2">29</td>
+              <td className="border border-blue-900 px-4 py-2">6</td>
               <td className="border border-blue-900 px-4 py-2">
-                1.23
+                <button className="bg-blue-800 text-white mx-1 px-3 py-2 rounded-md">
+                  <a href="#">View</a>
+                </button>
               </td>
-              <td className="border border-blue-900 px-4 py-2">
-        Shyam Enterprise
-              </td>
-              <td className="border border-blue-900 px-4 py-2">
-                2023-10-01
-              </td>
-              <td className="border border-blue-900 px-4 py-2">
-                1000
-              </td>
-              <td className="border border-blue-900 px-4 py-2">
-                10
-              </td>
-              <td className="border border-blue-900 px-4 py-2">
-               29
-              </td>
-              <td className="border border-blue-900 px-4 py-2">
-               6
-              </td>
-                <td className="border border-blue-900 px-4 py-2">
-                 <button className="bg-blue-800 text-white mx-1 px-3 py-2 rounded-md"><a href="#">View</a></button>   
-                    </td>
-
             </tr>
 
-            <tr>
-             
+
+
+            <tr className="text-center bg-blue-100 text-black">
+              <td className="border border-blue-900 px-4 py-2">2</td>
+              <td className="border border-blue-900 px-4 py-2">1.43</td>
+              <td className="border border-blue-900 px-4 py-2">
+                Shyam Enterprise
+              </td>
+              <td className="border border-blue-900 px-4 py-2">01-10-2023</td>
+              <td className="border border-blue-900 px-4 py-2">1700</td>
+              <td className="border border-blue-900 px-4 py-2">90</td>
+              <td className="border border-blue-900 px-4 py-2">79</td>
+              <td className="border border-blue-900 px-4 py-2">6</td>
+              <td className="border border-blue-900 px-4 py-2">
+                <button className="bg-blue-800 text-white mx-1 px-3 py-2 rounded-md">
+                  <a href="#">View</a>
+                </button>
+              </td>
             </tr>
+
+            <tr></tr>
           </tbody>
         </table>
       </div>

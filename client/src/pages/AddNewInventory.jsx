@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Instance from "../AxiosConfig";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AddNewInventory() {
   const [categories, setCategories] = useState([]);
@@ -16,6 +16,7 @@ function AddNewInventory() {
   const [billDate, setBillDate] = useState("");
   const [billAmount, setBillAmount] = useState("");
   const [threshold, setThreshold] = useState("");
+  const [bill, setBill] = useState(null); // file object
 
   const navigate = useNavigate();
 
@@ -23,7 +24,6 @@ function AddNewInventory() {
     const fetchCategories = async () => {
       try {
         const response = await Instance.get("/add/getTable");
-        console.log("Fetched data:", response.data); // Log the fetched data
         if (response.data.length > 0) {
           const uniqueCategories = [...new Set(response.data.map((cat) => cat.category))];
           setCategories(uniqueCategories);
@@ -40,26 +40,27 @@ function AddNewInventory() {
     e.preventDefault();
 
     try {
-      const response = await Instance.post("/add/purchase", {
-        category: selectedCategory,
-        itemName,
-        threshold: parseInt(threshold,10),
-        partyName,
-        billNo,
-        billDate,
-        pricePerUnit: parseInt(pricePerUnit,10),
-        billAmount: parseInt(billAmount ,10),
-        purchaseQty: parseInt(purchaseQty ,10),
-        qty: parseInt(qty ,10),
+      const formData = new FormData();
+      formData.append("category", selectedCategory);
+      formData.append("itemName", itemName);
+      formData.append("threshold", parseInt(threshold, 10));
+      formData.append("partyName", partyName);
+      formData.append("billNo", billNo);
+      formData.append("billDate", billDate);
+      formData.append("pricePerUnit", parseInt(pricePerUnit, 10));
+      formData.append("billAmount", parseInt(billAmount, 10));
+      formData.append("purchaseQty", parseInt(purchaseQty, 10));
+      formData.append("qty", parseInt(qty, 10));
+      formData.append("image", bill); // file
+
+      const response = await Instance.post("/add/purchase", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
       if (response.status === 200 || response.status === 201) {
         toast.success("Inventory added successfully!");
-        console.log("Inventory added successfully:", response.data.billAmount);
-        // setTimeout(() => {
-        //   navigate("/inventory-table");
-        //   window.location.reload();
-        // }, 10000);
       }
     } catch (error) {
       console.error("Add Inventory error:", error.response?.data || error.message);
@@ -92,9 +93,10 @@ function AddNewInventory() {
               <div className="font-bold text-blue-900">
                 <label>Category</label>
                 <select
-                  className="border-2 text-gray-500 my-2 px-5 py-2 w-full rounded-md"
+                  name="category"
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="border-2 my-2 px-5 py-2 w-full text-gray-500 rounded-md"
                   required
                 >
                   <option value="">Select Category</option>
@@ -193,6 +195,16 @@ function AddNewInventory() {
                   required
                 />
               </div>
+
+              <div className="font-bold text-blue-900">
+                <label>Bill Photo</label>
+                <input
+                  className="border-2 my-2 text-gray-500 px-5 py-2 rounded-md w-full"
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setBill(e.target.files[0])}
+                />
+              </div>
             </div>
 
             <div className="flex justify-center text-blue-900 items-center">
@@ -216,13 +228,13 @@ function AddNewInventory() {
                   setBillAmount("");
                   setPricePerUnit("");
                   setPurchaseQty("");
+                  setBill(null);
                 }}
               >
                 Clear
               </button>
             </div>
           </form>
-        
         </div>
       </div>
     </div>

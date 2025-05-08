@@ -1,154 +1,132 @@
-import { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import Instance from "../AxiosConfig";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 
 
-const RequestInventoryTable = () => {
-  const [inventory, setInventory] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(""); 
-  const [selectedStatus, setSelectedStatus] = useState(""); // New state for status filter
-  const [loading, setLoading] = useState(true);
-  const srNoRef = useRef(1);  
+function RequestInventoryTable() {
   const navigate = useNavigate();
-  
+  const [viewRequestInventory, setViewRequestInventory] = useState([]);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    const fetchViewRequestInventory = async () => {
+      try {
+        const response = await Instance.get("/add/getViewRequestInventory");
+        console.log("Fetched data:", response.data);
+        setViewRequestInventory(response.data);
+      } catch (error) {
+        console.error("Error fetching request inventory:", error);
+      }
+    };
 
-  const fetchData = async () => {
-    try {
-      const res = await Instance.get("/add/getTable");
-      setInventory(res.data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching inventory:", error);
-      setLoading(false);
-    }
+
+
+
+
+    fetchViewRequestInventory();
+  }, []);
+  console.log(viewRequestInventory);
+
+  const formatDate = (isoDate) => {
+    const date = new Date(isoDate);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
   };
 
-  
-
-  // Get unique categories for dropdown
-  const uniqueCategories = [
-    ...new Set(inventory.map((category) => category.category)),
-  ];
-
-  // Filter and sort inventory
-  const filteredInventory = inventory
-    .filter((category) =>
-      selectedCategory ? category.category === selectedCategory : true
-    ) // Filter by selected category
-    .map((category) => ({
-      ...category,
-      items: category.items
-        .filter((item) =>
-          item.name.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-        .filter((item) =>
-          selectedStatus ? item.status.toLowerCase() === selectedStatus.toLowerCase() : true
-        ) // Filter by selected status
-        .sort((a, b) => a.name.localeCompare(b.name)), // Sort items alphabetically
-    }))
-    .filter(
-      (category) =>
-        category.items.length > 0 ||
-        category.category.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    .sort((a, b) => a.category.localeCompare(b.category)); // Sort categories alphabetically
-
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4 text-center text-black">
-        Inventory Table
-      </h1>
+    
+    <div className="wrapper">
+      <div className="main flex items-start justify-center"></div>
+      <div className="mt-10 text-black p-10">
+        <h2 className="text-3xl font-bold text-center text-blue-900">
+          View Request Inventory Table
+        </h2>
+        <table className="w-full border-collapse border border-blue-900 mt-4 text-black">
+          <thead>
+            <tr className="bg-blue-800">
+              <th className="border text-white px-4 py-2">S.No</th>
+              <th className="border text-white px-4 py-2">Item Name</th>
+              <th className="border text-white px-4 py-2">Category</th>
+              <th className="border text-white px-4 py-2">Department</th>
+              <th className="border text-white px-4 py-2">Qty</th>
+              <th className="border text-white px-4 py-2">Required Date</th>
+              <th className="border text-white px-4 py-2">Reason</th>
+              <th className="border text-white px-4 py-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {viewRequestInventory.length > 0 ? (
+              viewRequestInventory.map((category, categoryIndex) => {
+                if (
+                  !category.requestItems ||
+                  !Array.isArray(category.requestItems)
+                ) {
+                  return null; // Skip this category if requestItems is not an array
+                }
+                return category.requestItems.map((item, itemIndex) => {
+                  return (
+                    <tr
+                      key={`${categoryIndex}-${itemIndex}`}
+                      className="text-center bg-blue-100 text-black"
+                    >
+                      <td className="border border-blue-900 px-4 py-2">
+                        {categoryIndex + 1}.{itemIndex + 1}
+                      </td>
+                      <td className="border border-blue-900 px-4 py-2">
+                        {item.itemName}
+                      </td>
+                      <td className="border border-blue-900 px-4 py-2">
+                        {category.category}
+                      </td>
+                      <td className="border border-blue-900 px-4 py-2">
+                        {item.requestByDept}
+                      </td>
+                      <td className="border border-blue-900 px-4 py-2">
+                        {item.requestQty}
+                      </td>
+                      
+                      <td className="border border-blue-900 px-4 py-2">
+                        {formatDate(item.requireDate)}
+                      </td>
 
-      <div className="flex flex-col md:flex-row justify-center mb-4 gap-4">
-        {/* Text Search Input */}
-        <input
-          type="text"
-          placeholder="Search by item name"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="border border-gray-400 rounded-md px-4 py-2 text-black w-full md:w-1/4"
-        />
+                      <td className="border border-blue-900 px-4 py-2">
+                        {item.requestReason}
+                      </td>
 
-        {/* Category Dropdown */}
-        <select
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-          className="border border-gray-400 rounded-md px-4 py-2 text-black w-full md:w-1/4"
-        >
-          <option value="">All Categories</option>
-          {uniqueCategories.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
+                      <td className="border border-blue-900 px-1 py-2 ">
+                      <button className="bg-blue-500 text-white mx-1 px-3 py-2 rounded-md"  
+                      onClick={() =>
+                        navigate("/issue-inventory", {
+                          state: { category: category.category, ...item },
+                        })
+                      }>
+                        Issue
+                      </button>
 
-        {/* Status Dropdown */}
-        <select
-          value={selectedStatus}
-          onChange={(e) => setSelectedStatus(e.target.value)}
-          className="border border-gray-400 rounded-md px-4 py-2 text-black w-full md:w-1/4"
-        >
-          <option value="">All Status</option>
-          <option value="Available">Available</option>
-          <option value="Unavailable">Out of Stock</option>
-        </select>
-      </div>
 
-      {loading ? (
-        <p className="text-center">Loading...</p>
-      ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-300">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="border px-4 py-2 text-black">Serial No</th>
-                <th className="border px-4 py-2 text-black">Category</th>
-                <th className="border px-4 py-2 text-black">Item Name</th>
-                <th className="border px-4 py-2 text-black">Quantity</th>
-                <th className="border px-4 py-2 text-black">Actions</th>
+                      </td>
+
+                      
+                    </tr>
+                  );
+                });
+              })
+            ) : (
+              <tr>
+                <td colSpan="7" className="text-center py-4">
+                  No request inventory
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {filteredInventory.map((categoryData, categoryIndex) =>
-                categoryData.items.map((item, itemIndex) => (
-                  <tr
-                    key={`${categoryData._id}-${itemIndex}`}
-                    className="border"
-                  >
-                    <td className="border px-4 py-2 text-black">
-                      {srNoRef.current++}
-                    </td>
-                    <td className="border px-4 py-2 text-black">
-                      {categoryData.category}
-                    </td>
-                    <td className="border px-4 py-2 text-black">{item.name}</td>
-                    <td className="border px-4 py-2 text-black">{item.qty}</td>
-                    <td className="border px-4 py-2 text-black"> <button
-                        className="bg-blue-700 text-white px-4 py-2 rounded-md mr-2"
-                        onClick={() =>
-                          navigate("/request-inventory", {
-                            state: { category: categoryData.category, ...item },
-                          })
-                        }
-                      >
-                        Request
-                      </button></td>
-                  
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      )}
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
-};
+}
+
 
 export default RequestInventoryTable;

@@ -7,13 +7,16 @@ function Dashboard() {
   const location = useLocation();
 
   useEffect(() => {
-    fetchUserRole();
+    fetchData();
   }, []);
 
-  const fetchUserRole = async () => {
+  const fetchData = async () => {
     try {
-      const res = await Instance.get("/auth/checkToken");
+      const res = await Instance.get("/auth/checkToken", {
+        withCredentials: true,
+      });
       setRole(res.data.role);
+      console.log(res.data.role);
     } catch (error) {
       console.error("Error fetching user role:", error);
     }
@@ -24,61 +27,104 @@ function Dashboard() {
     return `${role.charAt(0).toUpperCase() + role.slice(1)} Dashboard`;
   };
 
-  const getNavItemClass = (path) => {
-    return `nav-item px-4 py-2 block ${
+  const getNavLinkClass = (path) =>
+    `py-3 text-lg px-5 border-b border-black transition-all duration-200 ${
       location.pathname === path
-        ? "bg-white text-black font-semibold rounded"
-        : "hover:bg-blue-800"
+        ? "bg-slate-100 text-blue-900 font-bold rounded-l-md shadow-md border-l-4 border-yellow-400"
+        : "text-blue-50 hover:font-bold hover:bg-gray-50 hover:text-blue-900"
     }`;
-  };
 
   return (
-    <div className="left_side bg-blue-950 text-amber-50 fixed z-1 w-1/6 h-full overflow-y-auto">
+    <div className="left_side bg-blue-950 text-amber-50 fixed z-1 w-1/6 h-full">
       <div className="dashboard">
-        <h1 className="bg-blue-900 text-center font-bold text-2xl px-6 py-4">
+        <h1 className="bg-blue-900 text-center font-bold text-3xl px-6 py-5">
           {getRoleHeading()}
         </h1>
 
-        <ul className="text-sm space-y-1">
-          <Link to="/inventory-table"><li className={getNavItemClass("/inventory-table")}>Inventory Table</li></Link>
-          <Link to="/summary"><li className={getNavItemClass("/summary")}>Summary</li></Link>
-          {(role === "admin" || role === "storeman") && (
+        <ul>
+          {/* Storeman Access */}
+          {role === "storeman" && (
             <>
-              <Link to="/add-new-inventory"><li className={getNavItemClass("/add-new-inventory")}>Add New Inventory</li></Link>
-              <Link to="/add-inventory"><li className={getNavItemClass("/add-inventory")}>Add Inventory</li></Link>
-              <Link to="/issue-inventory"><li className={getNavItemClass("/issue-inventory")}>Issue Inventory</li></Link>
-              <Link to="/issue-inventory-table"><li className={getNavItemClass("/issue-inventory-table")}>Issued Inventory Table</li></Link>
-              <Link to="/request-inventory-table"><li className={getNavItemClass("/request-inventory-table")}>Request Inventory Table</li></Link>
-              <Link to="/admin-request-table"><li className={getNavItemClass("/admin-request-table")}>Admin Request Table</li></Link>
-              <Link to="/faculty-issue-inventory-table"><li className={getNavItemClass("/faculty-issue-inventory-table")}>Faculty Issue Table</li></Link>
-              <Link to="/faculty-view-request-table"><li className={getNavItemClass("/faculty-view-request-table")}>Faculty View Request</li></Link>
-              <Link to="/faculty-notification"><li className={getNavItemClass("/faculty-notification")}>Faculty Notifications</li></Link>
-              <Link to="/notify"><li className={getNavItemClass("/notify")}>Send Notification</li></Link>
-              <Link to="/faculty-request-inventory-table"><li className={getNavItemClass("/faculty-request-inventory-table")}>Faculty Request Table</li></Link>
-              <Link to="/report"><li className={getNavItemClass("/report")}>Report</li></Link>
+              <Link to="/inventory-table">
+                <li className={getNavLinkClass("/inventory-table")}>
+                  Inventory Table
+                </li>
+              </Link>
+              {/* <Link to="/inventory">
+                <li className={getNavLinkClass("/inventory")}>
+                  Add Inventory
+                </li>
+              </Link> */}
+               <Link to="/purchase">
+                <li className={getNavLinkClass("/purchase")}>
+                  Add Inventory
+                </li>
+              </Link>
+              <Link to="/request-inventory-table">
+                <li className={getNavLinkClass("/request-inventory-table")}>
+                  View Request
+                </li>
+              </Link>
+              <Link to="/issue-inventory-table">
+                <li className={getNavLinkClass("/issue-inventory-table")}>
+                  Issued Inventories
+                </li>
+              </Link>
+              <Link to="/restock-inventory">
+                <li className={getNavLinkClass("/restock-inventory")}>Restock Inventory</li>
+              </Link>
+              <Link to="/threshold">
+                <li className={getNavLinkClass("/threshold")}>Threshold</li>
+              </Link>
             </>
           )}
 
-          {/* Admin Only */}
+          {/* Admin Access */}
           {role === "admin" && (
-            <Link to="/threshold"><li className={getNavItemClass("/threshold")}>Threshold</li></Link>
+            <>
+              <Link to="/faculty-inventory-table">
+                <li className={getNavLinkClass("/faculty-inventory-table")}>
+                  Inventory Table
+                </li>
+              </Link>
+              <Link to="/admin-request-table">
+                <li className={getNavLinkClass("/admin-request-table")}>
+                  View Requests
+                </li>
+              </Link>
+              {/* <Link to="/threshold">
+                <li className={getNavLinkClass("/threshold")}>Threshold</li>
+              </Link> */}
+            </>
           )}
 
-          {/* Faculty Only */}
+          {/* Faculty Access */}
           {role === "faculty" && (
             <>
-              <Link to="/faculty-request-inventory"><li className={getNavItemClass("/faculty-request-inventory")}>Request Inventory</li></Link>
-              <Link to="/threshold"><li className={getNavItemClass("/threshold")}>Threshold</li></Link>
+              <Link to="/faculty-inventory-table">
+                <li className={getNavLinkClass("/faculty-inventory-table")}>
+                  Inventory Table
+                </li>
+              </Link>
+              <Link to="/faculty-request-Inventory-table">
+                <li className={getNavLinkClass("/faculty-request-Inventory-table")}>
+                  Request Inventory Table
+                </li>
+              </Link>
+              <Link to="/faculty-view-request-table">
+                <li className={getNavLinkClass("/faculty-view-request-table")}>
+                  View Requests
+                </li>
+              </Link>
             </>
           )}
+        </ul>
 
-          {/* Accountant Only */}
-          {role === "accountant" && (
-            <>
-              <Link to="/purchase"><li className={getNavItemClass("/purchase")}>Purchase Inventory</li></Link>
-              <Link to="/purchase-table"><li className={getNavItemClass("/purchase-table")}>Purchase Table</li></Link>
-            </>
-          )}
+        {/* Common for All Roles */}
+        <ul>
+          <Link to="/summary">
+            <li className={getNavLinkClass("/summary")}>Summary</li>
+          </Link>
         </ul>
       </div>
     </div>

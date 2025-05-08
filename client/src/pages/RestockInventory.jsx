@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css'; // Import styles
 const RestockInventory = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { category, itemName, qty, purchaseQty,partyName, billNo, billDate, BillAmount,pricePerUnit } = location.state || {};
+  const { category, itemName, qty, purchaseQty,partyName, billNo, billDate, BillAmount,pricePerUnit ,bill} = location.state || {};
 
 
 const [updatedPurchaseQty, setUpdatedPurchaseQty] = useState(purchaseQty);
@@ -18,6 +18,7 @@ const [updatedBillNo, setUpdatedBillNo] = useState(billNo);
 const [updatedBillDate, setUpdatedBillDate] = useState(billDate);
 const [updatedBillAmount, setUpdatedBillAmount] = useState(BillAmount);
 const [updatedPricePerUnit, setUpdatedPricePerUnit] = useState(pricePerUnit);
+const [updatedBill, setUpdatedBill] = useState("");
 
 
   useEffect(() => {
@@ -40,6 +41,7 @@ const [updatedPricePerUnit, setUpdatedPricePerUnit] = useState(pricePerUnit);
         billAmount: updatedBillAmount,
         pricePerUnit: updatedPricePerUnit,
         qty,
+        bill,
        
       });
 
@@ -57,31 +59,56 @@ const [updatedPricePerUnit, setUpdatedPricePerUnit] = useState(pricePerUnit);
 
   return (
     <div className="wrapper">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <div className="main flex items-start justify-center">
         <div className="add_inventory rounded-2xl bg-blue-100 w-4/5 m-auto my-8 px-10 py-8">
-          <h1 className="text-blue-900 text-3xl font-bold text-center px-8 py-2">
+          <h1 className="text-blue-950 text-3xl font-bold text-center px-8 py-2">
             Restocking Inventory
           </h1>
           <form onSubmit={handleRestock}>
             <div className="grid grid-cols-4 gap-8 px-6 py-10">
+            <div className="font-bold text-blue-900">
+                <label>Inventory Name</label>
+                <input
+                  className="border-2 my-2 px-5 py-2 w-full rounded-md text-gray-500 "
+                  type="text"
+                  placeholder="Item Name"
+                  value={itemName}
+                  // disabled
+                />
+              </div>
               <div className="font-bold text-blue-900">
                 <label>Category</label>
                 <input
-                  className="border-2 my-2 px-5 py-2 w-full text-gray-500 "
                   type="text"
+                  className="border-2 my-2 px-5 py-2 w-full rounded-md text-gray-500"
                   value={category}
-                  disabled
+                  placeholder="Selected Category"
+                  // disabled
                 />
+                 
               </div>
 
               <div className="font-bold text-blue-900">
-                <label>Item Name</label>
+                <label>Party Name</label>
                 <input
-                  className="border-2 my-2 px-5 py-2 w-full text-gray-500 "
+                  className="border-2 my-2 px-5 py-2 w-full text-gray-500"
                   type="text"
-                  value={itemName}
-                  disabled
+                  value={updatePartyName}
+                  onChange={(e) => setUpdatedPartyName(e.target.value)}
+                  required
+                />
+              </div>
+
+
+              <div className="font-bold text-blue-900">
+                <label>Bill No</label>
+                <input
+                  className="border-2 my-2 px-5 py-2 w-full text-gray-500"
+                  type="number"
+                  value={updatedBillNo}
+                  onChange={(e) => setUpdatedBillNo(e.target.value)}
+                  required
                 />
               </div>
 
@@ -90,6 +117,7 @@ const [updatedPricePerUnit, setUpdatedPricePerUnit] = useState(pricePerUnit);
                 <input
                   className="border-2 my-2 px-5 py-2 w-full text-gray-500"
                   type="number"
+                  placeholder="Current Quantity"
                   value={qty}
                   disabled
                 />
@@ -130,30 +158,9 @@ const [updatedPricePerUnit, setUpdatedPricePerUnit] = useState(pricePerUnit);
 
 
 
-              <div className="font-bold text-blue-900">
-                <label>Party Name</label>
-                <input
-                  className="border-2 my-2 px-5 py-2 w-full text-gray-500"
-                  type="text"
-                  value={updatePartyName}
-                  onChange={(e) => setUpdatedPartyName(e.target.value)}
-                  required
-                />
-              </div>
+              
 
-
-              <div className="font-bold text-blue-900">
-                <label>Bill Amount</label>
-                <input
-                  className="border-2 my-2 px-5 py-2 w-full text-gray-500"
-                  type="number"
-                  value={updatedBillAmount}
-                  onChange={(e) => setUpdatedBillAmount(e.target.value)}
-                  required
-                />
-              </div>
-
-              <div className="font-bold text-blue-900">
+<div className="font-bold text-blue-900">
                 <label>Price Per Unit</label>
                 <input
                   className="border-2 my-2 px-5 py-2 w-full text-gray-500"
@@ -165,18 +172,15 @@ const [updatedPricePerUnit, setUpdatedPricePerUnit] = useState(pricePerUnit);
               </div>
 
               <div className="font-bold text-blue-900">
-                <label>Bill No</label>
+                <label>Bill Amount</label>
                 <input
                   className="border-2 my-2 px-5 py-2 w-full text-gray-500"
                   type="number"
-                  value={updatedBillNo}
-                  onChange={(e) => setUpdatedBillNo(e.target.value)}
+                  value={updatedBillAmount}
+                  onChange={(e) => setUpdatedBillAmount(e.target.value)}
                   required
                 />
               </div>
-
-
-
               <div className="font-bold text-blue-900">
                 <label>Bill Date</label>
                 <input
@@ -188,9 +192,16 @@ const [updatedPricePerUnit, setUpdatedPricePerUnit] = useState(pricePerUnit);
                 />
               </div>
 
-
-
-
+              <div className="font-bold text-blue-900">
+                <label>Bill Photo</label>
+                <input
+                  className="border-2 my-2 px-5 py-2 w-full text-gray-500"
+                  type="file"
+                  value={updatedBill}
+                  onChange={(e) => setUpdatedBill(e.target.value)}
+                  required
+                />
+              </div>
 
             </div>
 

@@ -5,7 +5,7 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [role, setRole] = useState(null); 
+  const [role, setRole] = useState(null);
 
   useEffect(() => {
     checkAuth();
@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
       const res = await axios.get("/auth/checkToken");
       if (res.status === 200) {
         setIsAuthenticated(true);
-        setRole(res.data.role); 
+        setRole(res.data.role);
       }
     } catch (error) {
       setIsAuthenticated(false);
@@ -26,7 +26,7 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, setIsAuthenticated, role, setRole, checkAuth }}
+      value={{ isAuthenticated, setIsAuthenticated,role,setRole,checkAuth}}
     >
       {children}
     </AuthContext.Provider>

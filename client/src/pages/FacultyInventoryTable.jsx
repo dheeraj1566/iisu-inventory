@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Instance from "../AxiosConfig";
 
-const InventoryTable = () => {
+const FacultyInventoryTable = () => {
   const [inventory, setInventory] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -133,8 +133,8 @@ const InventoryTable = () => {
                 <th className="border px-4 py-2">Item Name</th>
                 <th className="border px-4 py-2">Quantity</th>
                 <th className="border px-4 py-2">Status</th>
-                <th className="border px-4 py-2">Purchase Details</th>
-                <th className="border px-4 py-2">Actions</th>
+                {/* <th className="border px-4 py-2">Purchase Details</th> */}
+                {/* <th className="border px-4 py-2">Actions</th> */}
               </tr>
             </thead>
             <tbody>
@@ -164,7 +164,7 @@ const InventoryTable = () => {
                       >
                         {item.status}
                       </td>
-                      <td className="border px-4 py-2 text-black">
+                      {/* <td className="border px-4 py-2 text-black">
                         <button
                           className="bg-gray-700 text-white mx-2 px-5 py-2 rounded-md"
                           onClick={() =>
@@ -175,8 +175,8 @@ const InventoryTable = () => {
                         >
                           View
                         </button>
-                      </td>
-                      <td className="border px-4 py-2 text-black">
+                      </td> */}
+                      {/* <td className="border px-4 py-2 text-black">
                         <button
                           className="bg-yellow-500 text-white mx-1 px-5 py-2 rounded-md"
                           onClick={() =>
@@ -193,7 +193,7 @@ const InventoryTable = () => {
                         >
                           Delete
                         </button>
-                      </td>
+                      </td> */}
                     </tr>
                   );
                 });
@@ -206,4 +206,4 @@ const InventoryTable = () => {
   );
 };
 
-export default InventoryTable;
+export default FacultyInventoryTable;

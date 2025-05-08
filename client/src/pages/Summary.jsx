@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Instance from "../AxiosConfig";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
-
 const Summary = () => {
   const [filteredInventory, setFilteredInventory] = useState([]);
   const [loading, setLoading] = useState(true);

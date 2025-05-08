@@ -13,41 +13,67 @@ const issuedItemSchema = new mongoose.Schema({
 });
 
 
-
 const requestItemSchema = new mongoose.Schema({
   itemName: String, 
-  issuedToDept: String,
-  issuedQty: Number,
+  requestByDept: String,
+  requestQty: Number,
   returnStatus : {
     type: String,
     enum: ["Returnable", "Non Returnable"],
   },
+  requestByFaculty:String,
+  requestDate: { type: Date, default: Date.now },
+  requireDate: { type: Date },
+  status: {
+    type: String,
+    enum: ["Pending", "Approved", "Rejected"],
+  },
+  requestReason: String,
+  issuedQty: Number,
+  issuedDate: { type: Date },
+
+  returnDate: { type: Date },
   
-  issuedToFaculty:String,
-  issuedDate: { type: Date, default: Date.now },
+});
+const requestApprovedItemsSchema = new mongoose.Schema({
+  itemName: String, 
+  requestByDept: String,
+  requestQty: Number,
+  returnStatus : {
+    type: String,
+    enum: ["Returnable", "Non Returnable"],
+  },
+  requestByFaculty:String,
+  requestDate: { type: Date, default: Date.now },
+  requireDate: { type: Date },
+  status: {
+    type: String,
+    enum: [ "Approved"],
+  },
+  requestReason: String,
+  issuedQty: Number,
+  issuedDate: { type: Date },
+
+  returnDate: { type: Date },
+  
 });
 
 
-const facultyrequestItemSchema = new mongoose.Schema({
+
+
+const requestDeclineItemsSchema = new mongoose.Schema({
   itemName: String, 
-  issuedToDept: String,
-  issuedQty: Number,
-  returnStatus : {
+  requestQty: Number,
+  requestDate: { type: Date, default: Date.now },
+  status: {
     type: String,
-    enum: ["Returnable", "Non Returnable"],
+    enum: [ "Declined"],
   },
-  approvalStatus: {
-    type: String,
-    enum: ["Approved Admin", "Approved StoreMan" ,"Declined Admin", "Declined StoreMan"],
-  },
-  issuedToFaculty:String,
-  issuedDate: { type: Date, default: Date.now },
+  declineReason: String,
 });
 
 
 const purchaseItemSchema = new mongoose.Schema({
-  itemName: String,
-  threshold: Number,
   billNo: String,
   partyName: String,
   billDate: Date,
@@ -60,8 +86,7 @@ const purchaseItemSchema = new mongoose.Schema({
     enum: ["Available", "Low Stock","Out of Stock"],
   },
    purchaseDate: { type: Date, default: Date.now },
-
-  // bill: String, // Assuming this is a file path or URL to the bill document
+  bill: String, // Assuming this is a file path or URL to the bill document
 });
 
 const itemSchema = new mongoose.Schema({
@@ -80,8 +105,9 @@ const inventorySchema = new mongoose.Schema({
   items: [itemSchema], 
   issuedItems: [issuedItemSchema], 
   requestItems:[requestItemSchema],
-  facultyrequestItems:[facultyrequestItemSchema],
-  // purchaseItems:[purchaseItemSchema],
+  requestApprovedItems:[requestItemSchema],
+  requestRejectedItems:[requestItemSchema],
+  purchaseItems:[purchaseItemSchema],
 });
 
 const inventoryEntries = mongoose.model("Inventory", inventorySchema);
