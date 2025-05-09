@@ -216,7 +216,6 @@ export const requestInventoryFaculty = async (req, res) => {
   }
 };
 
-// getViewRequestInventory
 export const getViewRequestInventory = async (req, res) => {
   try {
     const viewRequestInventory = await inventoryEntries.find(
