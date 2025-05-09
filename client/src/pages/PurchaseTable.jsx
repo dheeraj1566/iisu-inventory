@@ -66,7 +66,7 @@ function PurchaseTable() {
               <td className="border border-blue-900 px-4 py-2">6</td>
               <td className="border border-blue-900 px-4 py-2">
                 <button className="bg-blue-800 text-white mx-1 px-3 py-2 rounded-md">
-                  <a href="#">View</a>
+                  <a href="">View</a>
                 </button>
               </td>
             </tr>
