@@ -8,7 +8,7 @@ import inventoryRoutes from "./routes/inventoryRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import facultyAuth from "./routes/facultyAuth.js";
 import accountantRoutes from "./routes/accountantRoutes.js";
-import storemanRoutes from "./routes/storemanRoute.js";
+import storeManRoutes from "./routes/storeManRoute.js";
 import cloudinary from "cloudinary";
 
 
@@ -35,7 +35,7 @@ app.use("/auth", authRouts);
 app.use("/auth/admin", adminRoutes);
 app.use("/auth/faculty", facultyAuth);
 app.use("/auth/accountant", accountantRoutes);
-app.use("/auth/storeman", storemanRoutes);
+app.use("/auth/storeman", storeManRoutes);
 app.use("/add", inventoryRoutes);
 
 
