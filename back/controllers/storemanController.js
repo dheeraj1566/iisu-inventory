@@ -20,13 +20,5 @@ export const registerStoreman = async (req, res) => {
   }
 };
 
-export const storemanLogOut = (req, res) => {
-  try {
-    res.clearCookie("facultyToken");
-    return res.json({ message: "Logout successful" }); 
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Internal server error" }); 
-  }
-};
+
 

@@ -75,3 +75,34 @@ export const checkAuth = (req, res) => {
     return res.status(401).json({ message: "Invalid token", error });
   }
 };
+
+export const logOut = (req, res) => {
+  const { adminToken, facultyToken, storemanToken, accountantToken } = req.cookies;
+
+  let role = null;
+
+  if (adminToken) {
+    role = "admin";
+  } else if (facultyToken) {
+    role = "faculty";
+  } else if (storemanToken) {
+    role = "storeman";
+  } else if (accountantToken) {
+    role = "accountant";
+  } else {
+    return res.status(401).json({ message: "No token found, please log in" });
+  }
+
+  try {
+    res.clearCookie(`${role}Token`, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
+
+    return res.json({ message: "Logout successful" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
