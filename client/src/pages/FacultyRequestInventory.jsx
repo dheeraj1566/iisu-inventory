@@ -15,7 +15,7 @@ function facultyRequestInventory() {
     requestByDept: "",
     requestQty: "",
     returnStatus: "",
-    requestByFaculty: "",
+    // requestByFaculty: "",
     requireDate: "",
     requestReason: "",
   });
@@ -55,7 +55,7 @@ function facultyRequestInventory() {
       requestByDept,
       requestQty,
       returnStatus,
-      requestByFaculty,
+      // requestByFaculty,
       requireDate,
       requestReason,
     } = formData;
@@ -63,7 +63,7 @@ function facultyRequestInventory() {
       !category ||
       !itemName ||
       !requestByDept ||
-      !requestByFaculty ||
+      // !requestByFaculty ||
       !requestReason ||
       !requireDate ||
       !returnStatus ||
@@ -89,7 +89,7 @@ function facultyRequestInventory() {
           requestByDept: "",
           requestQty: "",
           returnStatus: "",
-          requestByFaculty: "",
+          // requestByFaculty: "",
           requireDate: "",
           requestReason: "",
         });
@@ -120,21 +120,6 @@ function facultyRequestInventory() {
             <div className="grid grid-cols-3 gap-12 px-12 py-10">
               <div className="font-bold  text-blue-900">
                 <label htmlFor="category text-blue-900">Category</label>
-                {/* <select
-                  name="category"
-                  value={formData.category}
-                  onChange={handleChange}
-                  className="border-2 my-2 px-5 py-2 w-full  text-gray-500 rounded-md"
-                  required
-                >
-                  <option value="">Select Category</option>
-                  {categories.map((category, index) => (
-                    <option key={index} value={category}>
-                      {category}
-                    </option>
-                  ))}
-                </select> */}
-
                 < input
                 type="text"
                 name="category"
@@ -303,7 +288,7 @@ function facultyRequestInventory() {
                 </select>
               </div>
 
-              <div className="font-bold text-blue-900">
+              {/* <div className="font-bold text-blue-900">
                 <label htmlFor="requestByFaculty text-blue-900">
                   Faculty Name
                 </label>
@@ -316,7 +301,7 @@ function facultyRequestInventory() {
                   className="border-2 my-2 px-5 py-2 w-full text-gray-500 rounded-md"
                   required
                 />
-              </div>
+              </div> */}  
 
               <div className="font-bold text-blue-900">
                 <label htmlFor="requireDate text-blue-900">Required Date</label>

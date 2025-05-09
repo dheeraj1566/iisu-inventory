@@ -20,16 +20,15 @@
   
 export const facultyLogOut = (req, res) => {
   try {
-    res.clearCookie('facultyToken');
-    res.json({ success: true, message: "Logged out" }); 
-
-    res.status(200).json({ message: "This will crash" }); 
+    res.clearCookie("facultyToken");
+    return res.json({ message: "Logout successful" }); 
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    console.error(error);
+    return res.status(500).json({ error: "Internal server error" }); 
   }
 };
 
 
 export const requestForInventroy = async (req, res)=> {
-
+  
 }
