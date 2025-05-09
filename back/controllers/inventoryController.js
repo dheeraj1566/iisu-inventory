@@ -1,6 +1,7 @@
 import inventoryEntries from "../models/inventoryEntries.js";
 import removedInventory from "../models/removedINV.js";
-import { uploadToCloudinary } from "../services/Cloudinary.js";
+// import { uploadToCloudinary } from "../services/Cloudinary.js";
+import { uploadToCloudinary } from "../services/cloudinary.js";
 
 export const addInventory = async (req, res) => {
   try {
