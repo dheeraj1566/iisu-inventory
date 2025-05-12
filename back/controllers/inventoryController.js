@@ -404,7 +404,6 @@ export const getIssuedInventory = async (req, res) => {
   }
 };
 
-// removedInventoryIteam  //
 
 export const removeInventoryItem = async (req, res) => {
   try {
@@ -450,7 +449,6 @@ export const removeInventoryItem = async (req, res) => {
   }
 };
 
-// removed RequestInventoryItem  //
 export const deleteRequestInventory = async (req, res) => {
   try {
     const { category, itemName } = req.body;
