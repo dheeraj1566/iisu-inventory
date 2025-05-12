@@ -327,7 +327,6 @@ export const restockInventory = async (req, res) => {
   }
 };
 
-// issueInventroy
 
 export const issueInventory = async (req, res) => {
   try {
@@ -388,7 +387,6 @@ export const issueInventory = async (req, res) => {
   }
 };
 
-// getIssuedInventory //
 export const getIssuedInventory = async (req, res) => {
   try {
     const issuedInventory = await inventoryEntries.find(
